@@ -17,6 +17,7 @@ const [player, setPlayer]=useState([]);
     
 const deletePlayer=(id)=>{
     console.log(id);
+    alert("do you wana delete this player");
     axios.delete('http://localhost:8000/api/players/delete/'+id)
     .then(res=>{
         // navigate("/");
