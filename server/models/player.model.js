@@ -4,7 +4,14 @@ const playerSchema = new mongoose.Schema({
 	name: {type: String,
         required: [true, "Name is required"],
         minlength: [2, "Name must be at least 2 characters long"]},
-    position:{type:String}		
+    position: {
+        type: String,
+        optional: [true]
+    },
+    playerStatus: {
+        type: String,
+        default: "Undecided"
+    }		
 	
 },{timestamps:true});
 

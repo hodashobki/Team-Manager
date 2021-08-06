@@ -57,10 +57,11 @@ const handelSubmit=(e)=>{
             setPosition("");
             navigate("/");
         })
-        // .catch(err=>{
-        //     const errstr=err.response.data.error.errors.name.message;
-        //     setSubmitError(errstr);
-        // })
+        .catch(err=>{
+            const errstr=err.response.data.error.errors.name.message;
+            console.log( errstr);
+            setSubmitError(errstr);
+        })
     }
     else{
         setSubmitError(submitErrorMsg.nosubmit);

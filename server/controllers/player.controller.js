@@ -15,7 +15,7 @@ module.exports.findOneSinglePlayer = (req, res) => {
 module.exports.createNewPlayer = (req, res) => {
   Player.create(req.body)
     .then(newlyCreatedPlayer => res.json({ player: newlyCreatedPlayer }))
-    .catch(err => res.json({ message: "Something went wrong", error: err }));
+    .catch(err => res.status(400).json({ message: "Something went wrong", error: err }));
 };
 
 module.exports.updateExistingPlayer = (req, res) => {

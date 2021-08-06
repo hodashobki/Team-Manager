@@ -10,6 +10,8 @@ const StatusPage = (props) => {
     const[colorred,setColorRed]=useState("");
     const[coloryellow,setcolorYellow]=useState("");
     const [playerId,seplayerId]=useState("");
+    
+    var class_name="default";
 
     useEffect(()=>{
         axios.get("http://localhost:8000/api/players")
@@ -19,16 +21,31 @@ const StatusPage = (props) => {
     },[player])
 
     // buttons:
-    // const deletePlayer=(id)=>{
-    //     console.log(id);
-    //     axios.delete('http://localhost:8000/api/players/delete/'+id)
-    //     .then(res=>{
-    //         // navigate("/");
-    //     })
-    
+    // didn't work
+    // const changetoyellow = (id) => {
+      
+    //     axios.get('http://localhost:8000//api/players/'+ id)
+    //     .then(response =>{  setcolorYellow("primary");
+    //         setcolorGreen("");
+    //         setColorRed(""); })
+    //      .catch(error => console.log("There was an issue: ", error))
     // }
 
-    const changetoyellow=(id,j)=>{
+    
+    // didn't work:
+
+
+// const changetoyellow=(e,j)=>{
+//     const filteryellow=player.filter((play,i)=>{
+//         return i===j;
+//         });
+//         setcolorYellow("primary");
+//             setcolorGreen("");
+//             setColorRed(""); 
+// }
+
+// didn't work:
+    const changetoyellow=(id)=>{
         
         setcolorYellow("primary");
         setcolorGreen("");
@@ -42,9 +59,17 @@ const StatusPage = (props) => {
         setColorRed("secondary");
     
 }
-    const changetogreen=(id,j)=>{
+    const changetogreen=(pid)=>{
+        var arr=[];
+        console.log(pid)
+        arr=player.filter(player=>player._id ===pid);
+        console.log(arr)
+        console.log(arr[0].playerStatus)
+        arr[0].playerStatus="playing";
+        console.log(arr[0].playerStatus)
+      
         setcolorYellow("");
-        setcolorGreen("green");
+        setcolorGreen("secondary");
         setColorRed("");
     }
 
@@ -65,20 +90,63 @@ const StatusPage = (props) => {
   </thead> 
   <tbody>
    {player.map((play,i)=>{
+       
     return(
-        <tr key={i}>
+        <tr key={play._id}>
+            
         <td>{play.name}</td>
+        {/* <td>{play._id}</td> */}
         <td>
     {/* <Button onClick={e => {deletePlayer(play._id)} } variant="contained" color="secondary"> */}
-<Button ocClick={e=>{changetogreen(play._id,i+1)}} variant="contained" color={colorgreen}>
+{/* <Button  className={class_name} onClick={e=>{changetogreen(play._id)}} variant="contained" color={colorgreen}>
    Playing
 </Button>
-<Button onClick={(e)=>{changetored(play._id,i+1)}} variant="contained" color={colorred}>
+<Button onClick={(e)=>{changetored(play._id)}} variant="contained" color={colorred}>
    NotPlaying
 </Button>
-<Button onClick={(e)=>{changetoyellow(play._id,i+1)}} variant="contained" color={coloryellow}>
+<Button onClick={(e)=>{changetoyellow(play._id)}} variant="contained" color={coloryellow}>
    Undecided
-</Button>
+</Button> */}
+
+{
+    play.playerStatus ==="Playing"?
+    <>
+            <Button  className={class_name} onClick={e=>{changetogreen(play._id)}} variant="contained" color="primary">
+        Playing
+        </Button>
+        <Button onClick={(e)=>{changetored(play._id)}} variant="contained" color={colorred}>
+        NotPlaying
+        </Button>
+        <Button onClick={(e)=>{changetoyellow(play._id)}} variant="contained" color={coloryellow}>
+        Undecided
+        </Button>
+    </>
+    :play.playerStatus ==="NotPlaying"? 
+    <>
+        <Button  className={class_name} onClick={e=>{changetogreen(play._id)}} variant="contained" color={colorgreen}>
+        Playing
+        </Button>
+        <Button onClick={(e)=>{changetored(play._id)}} variant="contained" color="secondary">
+        NotPlaying
+        </Button>
+        <Button onClick={(e)=>{changetoyellow(play._id)}} variant="contained" color={coloryellow}>
+        Undecided
+        </Button>
+    </>
+    :
+    <>
+        <Button  className={class_name} onClick={e=>{changetogreen(play._id)}} variant="contained" color={colorgreen}>
+        Playing
+        </Button>
+        <Button onClick={(e)=>{changetored(play._id)}} variant="contained" color={colorred}>
+        NotPlaying
+        </Button>
+        <Button onClick={(e)=>{changetoyellow(play._id)}} variant="contained" color={coloryellow}>
+        Undecided
+        </Button>
+    </>
+
+}
           
         </td>
     </tr>
